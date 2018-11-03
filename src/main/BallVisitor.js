@@ -1,3 +1,5 @@
+import { random } from './toolbox';
+
 export class Draw {
     constructor(context) {
         this.ctx = context;
@@ -42,5 +44,25 @@ export class Update {
 
     is_going_off_the_top_edge(ball) {
         return (ball.y - ball.size) <= 0;
+    }
+}
+
+export class CollisionDetection {
+    constructor(balls) {
+        this.balls = balls;
+    }
+
+    visit(ball) {
+        this.balls.forEach((subject) => {
+            if (!(ball === subject)) {
+                const dx = ball.x - subject.x;
+                const dy = ball.y - subject.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+          
+                if (distance < ball.size + subject.size) {
+                  subject.color = ball.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) +')';
+                }
+              }
+        });
     }
 }

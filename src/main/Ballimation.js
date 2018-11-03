@@ -1,5 +1,6 @@
 import BallBuilder from './BallBuilder';
-import { Draw, Update } from './BallVisitor';
+import { Draw, Update, CollisionDetection } from './BallVisitor';
+import { random } from './toolbox';
 
 export default class Ballimation {
   constructor() {
@@ -7,6 +8,7 @@ export default class Ballimation {
     this._ctx = null;
     this._draw = null;
     this._update = null;
+    this._detect = null;
     this._width = 0;
     this._height = 0;
   }
@@ -29,12 +31,13 @@ export default class Ballimation {
   preLaunch() {
     this._draw = new Draw(this._ctx);
     this._update = new Update(this._width, this._height);
-    this.washCanvas();
+    this._detect = new CollisionDetection(this._balls);
     this.fillBucketOfBalls();
     return this;
   }
 
   loop() {
+    this.washCanvas();
     this.shakeBucketOfBalls();
     requestAnimationFrame(() => this.loop());
   }
@@ -59,30 +62,26 @@ export default class Ballimation {
   }
 
   shakeBucketOfBalls() {
-    this._balls.forEach(ball => ball.do(this._draw).do(this._update));
+    this._balls.forEach(ball => ball.do(this._draw).do(this._update).do(this._detect));
   }
 
   makeRandomX(size) {
-    return this.random(0 + size, this._width - size);
+    return random(0 + size, this._width - size);
   }
 
   makeRandomY(size) {
-    return this.random(0 + size, this._height - size);
+    return random(0 + size, this._height - size);
   }
 
   makeRandomVelocity() {
-    return this.random(-7, 7);
+    return random(-7, 7);
   }
 
   makeRandomColor() {
-    return 'rgb(' + this.random(0, 255) + ',' + this.random(0, 255) + ',' + this.random(0, 255) + ')';
+    return 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
   }
 
   makeRandomSize() {
-    return this.random(5, 40);
-  }
-
-  random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return random(10, 20);
   }
 }

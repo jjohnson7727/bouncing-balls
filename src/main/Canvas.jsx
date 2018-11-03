@@ -10,7 +10,7 @@ class Canvas extends Component {
 
     componentDidMount() {
         this.ballimation.context(this.pallet())
-                        .prelaunch()
+                        .preLaunch()
                         .loop();
     }
 
@@ -27,9 +27,9 @@ class Canvas extends Component {
     }
 }
 
-CanvasFX.defaultProps = {
+Canvas.defaultProps = {
     width: window.innerWidth,
     height: window.innerHeight
 }
 
-export default CanvasFX;
+export default Canvas;
