@@ -26,20 +26,20 @@ export default class Ballimation {
     return this;
   }
 
-  prelaunch() {
+  preLaunch() {
     this._draw = new Draw(this._ctx);
     this._update = new Update(this._width, this._height);
+    this.washCanvas();
     this.fillBucketOfBalls();
     return this;
   }
 
   loop() {
-    this.resetCanvas();
     this.shakeBucketOfBalls();
     requestAnimationFrame(() => this.loop());
   }
 
-  resetCanvas() {
+  washCanvas() {
     this._ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
     this._ctx.fillRect(0, 0, this._width, this._height);
   }
@@ -79,7 +79,7 @@ export default class Ballimation {
   }
 
   makeRandomSize() {
-    return this.random(10, 20);
+    return this.random(5, 40);
   }
 
   random(min, max) {
