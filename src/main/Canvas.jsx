@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import Animation from './Animation';
+import './Canvas.css';
 
 class Canvas extends Component {
     constructor(props) {
         super(props);
         this.canvas = React.createRef();
-        this.animation = new Animation().width(this.props.width).height(this.props.height).callback(props.callback);
+        this.animation = new Animation()
+                                .width(this.props.width)
+                                .height(this.props.height)
+                                .callback(props.callback);
     }
 
     componentDidMount() {
-        this.animation.context(this.pallet())
-                        .preLaunch()
-                        .loop();
+        this.animation.context(this.pallet()).initialize();
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.isStartup(prevProps)) this.animation.start();
+        else if(this.isShutdown(prevProps)) this.animation.stop();
+    }
+
+    isShutdown(prevProps) {
+        return this.props.running === false && prevProps.running === true;
+    }
+
+    isStartup(prevProps) {
+        return this.props.running === true && prevProps.running === false;
     }
 
     pallet() {
@@ -20,7 +35,7 @@ class Canvas extends Component {
 
     render() {
         return (
-            <div className="Canvas">
+            <div className='Canvas'>
                 <canvas ref={this.canvas} width={this.props.width} height={this.props.height}></canvas>
             </div>
         );

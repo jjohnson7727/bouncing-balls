@@ -9,7 +9,8 @@ export default class Animation {
       width: 0,
       height: 0,
       balls: [],
-      callback: null
+      callback: null,
+      trigger: false
     }
     this.handlers = [];
   }
@@ -29,21 +30,40 @@ export default class Animation {
     return this;
   }
 
+  start() {
+    this.resetGame();
+    this._payload.trigger = true;
+    this.loop();
+  }
+
+  stop() {
+    this._payload.trigger = false;
+  }
+
   callback(callback) {
     this._payload.callback = callback;
     return this;
   }
 
-  preLaunch() {
-    this.handlers.push(new BallHandler(this._payload));
-    this.handlers.push(new EvilCircleHandler(this._payload));
+  initialize() {
+    this._washCanvas();
     return this;
   }
 
-  loop() {
+  resetGame() {
+    this.handlers = [];
+    this._payload.balls = [];
+    this.handlers.push(new BallHandler(this._payload));
+    this.handlers.push(new EvilCircleHandler(this._payload));
     this._washCanvas();
-    this.handlers.forEach(handle => handle.run());
-    requestAnimationFrame(() => this.loop());
+  }
+
+  loop() {
+    if (this._payload.trigger) {
+      this._washCanvas();
+      this.handlers.forEach(handle => handle.run());
+      requestAnimationFrame(() => this.loop());
+    }
   }
 
   _washCanvas() {

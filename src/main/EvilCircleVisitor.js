@@ -1,3 +1,5 @@
+import Curator from './KeyCurator';
+
 export class Draw {
     constructor(context) {
         this.ctx = context;
@@ -43,6 +45,52 @@ export class CheckBounds {
     }
 }
 
+export class Update {
+
+    constructor(key) {
+        this._key = key;
+    }
+
+    visit(ball) {
+        if (this.wantsToMoveUp()) this.moveUp(ball);
+        if (this.wantsToMoveLeft()) this.moveLeft(ball);
+        if (this.wantsToMoveDown()) this.moveDown(ball);
+        if (this.wantsToMoveRight()) this.moveRight(ball);
+    }
+
+    wantsToMoveUp() {
+        return this._key.isDown(Curator.UP) || this._key.isDown(Curator.UP_W);
+    }
+
+    wantsToMoveLeft() {
+        return this._key.isDown(Curator.LEFT) || this._key.isDown(Curator.LEFT_A);
+    }
+
+    wantsToMoveRight() {
+        return this._key.isDown(Curator.RIGHT) || this._key.isDown(Curator.RIGHT_D);
+    }
+
+    wantsToMoveDown() {
+        return this._key.isDown(Curator.DOWN) || this._key.isDown(Curator.DOWN_S);
+    }
+
+    moveUp(ball) {
+        ball.y -= ball.velY;
+    }
+
+    moveLeft(ball) {
+        ball.x -= ball.velX;
+    }
+
+    moveDown(ball) {
+        ball.y += ball.velY;
+    }
+
+    moveRight(ball) {
+        ball.x += ball.velX;
+    }
+}
+
 export class CollisionDetection {
     constructor(balls, callback) {
         this.balls = balls;
@@ -61,6 +109,6 @@ export class CollisionDetection {
                     this.callback();
                 }
             }
-    });
+        });
     }
 }
