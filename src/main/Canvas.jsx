@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import Ballimation from './Ballimation';
+import Animation from './Animation';
 
 class Canvas extends Component {
     constructor(props) {
         super(props);
         this.canvas = React.createRef();
-        this.ballimation = new Ballimation().width(this.props.width).height(this.props.height);
+        this.animation = new Animation().width(this.props.width).height(this.props.height);
     }
 
     componentDidMount() {
-        this.ballimation.context(this.pallet())
+        this.animation.context(this.pallet())
                         .preLaunch()
                         .loop();
     }

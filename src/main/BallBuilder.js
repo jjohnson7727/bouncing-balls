@@ -1,4 +1,5 @@
 import Ball from "./Ball";
+import Shape from "./Shape";
 
 export default class BallBuilder {
     constructor() {
@@ -6,6 +7,7 @@ export default class BallBuilder {
         this._y = 0;
         this._velX = 0;
         this._velY = 0;
+        this._exists = true;
         this._color = 'white';
         this._size = 10;
     }
@@ -41,6 +43,9 @@ export default class BallBuilder {
     }
 
     build() {
-        return new Ball(this._x, this._y, this._velX, this._velY, this._color, this._size);
+        return new Ball(
+                new Shape(this._x, this._y, this._velX, this._velY, this._exists),
+                this._color,
+                this._size);
     }
 }

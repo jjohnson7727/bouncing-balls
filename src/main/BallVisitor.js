@@ -6,10 +6,12 @@ export class Draw {
     }
 
     visit(ball) {
-        this.ctx.beginPath();
-        this.ctx.fillStyle = ball.color;
-        this.ctx.arc(ball.x, ball.y, ball.size, 0, 2 * Math.PI);
-        this.ctx.fill();
+        if (ball.exists) {
+            this.ctx.beginPath();
+            this.ctx.fillStyle = ball.color;
+            this.ctx.arc(ball.x, ball.y, ball.size, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
     };
 }
 
@@ -20,14 +22,16 @@ export class Update {
     }
 
     visit(ball) {
-        if (this.is_going_off_the_right_hand_edge(ball) ||
-            this.is_going_off_the_left_hand_edge(ball)) ball.velX = -(ball.velX);
+        if (ball.exists) {
+            if (this.is_going_off_the_right_hand_edge(ball) ||
+                this.is_going_off_the_left_hand_edge(ball)) ball.velX = -(ball.velX);
 
-        if (this.is_going_off_the_bottom_edge(ball) ||
-            this.is_going_off_the_top_edge(ball)) ball.velY = -(ball.velY);
+            if (this.is_going_off_the_bottom_edge(ball) ||
+                this.is_going_off_the_top_edge(ball)) ball.velY = -(ball.velY);
 
-        ball.x += ball.velX;
-        ball.y += ball.velY;
+            ball.x += ball.velX;
+            ball.y += ball.velY;
+        }
     }
 
     is_going_off_the_right_hand_edge(ball) {
@@ -54,15 +58,15 @@ export class CollisionDetection {
 
     visit(ball) {
         this.balls.forEach((subject) => {
-            if (!(ball === subject)) {
+            if (ball.exists && !(ball === subject)) {
                 const dx = ball.x - subject.x;
                 const dy = ball.y - subject.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-          
+
                 if (distance < ball.size + subject.size) {
-                  subject.color = ball.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) +')';
+                    subject.color = ball.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
                 }
-              }
+            }
         });
     }
 }
