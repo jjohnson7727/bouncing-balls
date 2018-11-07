@@ -2,51 +2,43 @@
   text-align: center;
 }
 
-.App h1 {
+.output {
+  text-shadow: 0 0 4px white;
+  color: #aaa;
+}
+
+.hud-h1 {
   font-size: 2rem;
   letter-spacing: -1px;
   position: absolute;
   margin: 0;
   top: -4px;
   right: 5px;
-
   color: transparent;
-  text-shadow: 0 0 4px white;
 }
 
-.App p {
+.hud-p {
   position: absolute;
   margin: 0;
   top: 35px;
   right: 5px;
-  color: #aaa;
-  text-shadow: 0 0 4px white;
 }
 
-.App .button {
-  padding: 15px 25px;
-  font-size: 24px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #fff;
-  background-color: red;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-  position: absolute;
-  top: 50%;
-  right: 50%;
+.interface {
+  width: 250px;
+  height: 200px;
 }
 
-.App button {
+.center {
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
 
+.App button {
   outline: none;
   border-radius: 15%;
   font-size: 24px;

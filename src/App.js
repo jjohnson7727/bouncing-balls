@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Canvas from './main/Canvas';
 import './App.css';
 
-const TOTAL_BALLS = 25;
-const TOTAL_TIME = 35;
+const TOTAL_BALLS = 5;
+const TOTAL_TIME = 60;
 
 class App extends Component {
 
@@ -13,32 +13,34 @@ class App extends Component {
       time: TOTAL_TIME,
       balls: TOTAL_BALLS,
       running: false,
-      intervalID: 0
+      intervalID: 0,
+      score: 0,
+      message: 'Use aarow or asdw keys to move the evil circle and capture as many bouncing balls as you can!'
     }
   }
 
   render() {
     return (
       <div className="App">
-        <h1 className='noselect'>bouncing balls</h1>
-        <p className='noselect'>Balls: {this.state.balls} Time: {this.state.time}</p>
-        { this.makeStartButton() }
-        <Canvas running={this.state.running} callback={() => this.handleScoreUpdate()}/>
+        <h1 className='hud-h1 output noselect'>bouncing balls</h1>
+        <p className='hud-p output noselect'>Balls: {this.state.balls} Time: {this.state.time}</p>
+        { this.makeInterface() }
+        <Canvas balls={TOTAL_BALLS} running={this.state.running} callback={() => this.handleScoreUpdate()}/>
       </div>
     );
   }
 
   handleScoreUpdate() {
     this.setState(state => {
-      return {balls: state.balls - 1};
+      return { balls: state.balls - 1 };
     })
   }
 
   handleStart() {
     this.setState({
       running: true,
-      balls: 25,
-      time: 30,
+      balls: TOTAL_BALLS,
+      time: TOTAL_TIME,
       intervalID: window.setInterval(() => this.timerCallback(), 1000)
     });
   }
@@ -48,10 +50,15 @@ class App extends Component {
 
     if(interval <= 0 || this.state.balls <= 0) {
       window.clearInterval(this.state.intervalID);
+      const ball = (TOTAL_BALLS - this.state.balls) * 75;
+      const time = this.state.time * 95;
+      const win = this.state.balls <= 0 ? 500 : 0;
+
       this.setState({
         running: false,
-        time: 0
-      }, () => this.score());
+        time: interval,
+        score: ball + time + win
+      });
     } else {
       this.setState({
         time: interval
@@ -59,14 +66,26 @@ class App extends Component {
     }
   }
 
-  score() {
-    console.log('Ball score', (TOTAL_BALLS - this.state.balls) * 75);
-    console.log('Time Remaining Bonus', this.state.time * 95);
-    console.log('Zero Ball Bonus', this.state.balls <= 0 ? 500 : 0);
+  makeStartButton() {
+    return (<button onClick={() => this.handleStart()}>START</button>);
   }
 
-  makeStartButton() {
-    return this.state.running === false ? <button onClick={() => this.handleStart()}>START</button> : null;
+  makeMessage() {
+    return (<p className='output noselect'>{ this.state.message }</p>);
+  }
+
+  makeScore() {
+    return this.state.score > 0 ? (<p className='output noselect'>Score: { this.state.score }</p>) : null;
+  }
+
+  makeInterface() {
+    return this.state.running === false ? (<div className='interface center'>
+      { this.makeScore() }
+      <br/>
+      { this.makeMessage() }
+      <br/>
+      { this.makeStartButton() }
+    </div>) : null;
   }
 }
 

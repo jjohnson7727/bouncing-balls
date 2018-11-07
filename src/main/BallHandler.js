@@ -19,7 +19,7 @@ export default class BallHandler {
     _fillBucketOfBalls(payload) {
         const { balls, width, height } = payload;
 
-        while (balls.length < 25) {
+        while (balls.length < payload.totalBalls) {
             const size = this._makeRandomSize();
 
             const ball = new BallBuilder().x(this._makeRandomPosition(width, size))

@@ -9,7 +9,8 @@ class Canvas extends Component {
         this.animation = new Animation()
                                 .width(this.props.width)
                                 .height(this.props.height)
-                                .callback(props.callback);
+                                .callback(props.callback)
+                                .balls(props.balls);
     }
 
     componentDidMount() {

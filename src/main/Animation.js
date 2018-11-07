@@ -5,6 +5,7 @@ export default class Animation {
 
   constructor() {
     this._payload = {
+      totalBalls: 0,
       context: null,
       width: 0,
       height: 0,
@@ -27,6 +28,11 @@ export default class Animation {
 
   height(height) {
     this._payload.height = height;
+    return this;
+  }
+
+  balls(x) {
+    this._payload.totalBalls = x;
     return this;
   }
 

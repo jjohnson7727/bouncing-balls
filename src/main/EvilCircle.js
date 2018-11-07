@@ -3,11 +3,11 @@ import Ball from './Ball';
 export default class EvilCircle extends Ball {
 
     get velX() {
-        return 2.5;
+        return 3;
     }
 
     get velY() {
-        return 2.5;
+        return 3;
     }
 
     set velX(velX) {}
