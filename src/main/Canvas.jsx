@@ -5,7 +5,7 @@ class Canvas extends Component {
     constructor(props) {
         super(props);
         this.canvas = React.createRef();
-        this.animation = new Animation().width(this.props.width).height(this.props.height);
+        this.animation = new Animation().width(this.props.width).height(this.props.height).callback(props.callback);
     }
 
     componentDidMount() {

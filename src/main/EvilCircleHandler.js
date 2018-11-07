@@ -8,7 +8,7 @@ export default class EvilCircleHandler {
         this._evil = new EvilCircle(new Shape(0, 0, 0, 0, true), 'red', 20);
         this._draw = new Draw(payload.context);
         this._bounds = new CheckBounds(payload.width, payload.height);
-        this._detect = new CollisionDetection(payload.balls);
+        this._detect = new CollisionDetection(payload.balls, payload.callback);
         this.initialize();
     }
 

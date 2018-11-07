@@ -44,8 +44,9 @@ export class CheckBounds {
 }
 
 export class CollisionDetection {
-    constructor(balls) {
+    constructor(balls, callback) {
         this.balls = balls;
+        this.callback = callback;
     }
 
     visit(ball) {
@@ -55,7 +56,10 @@ export class CollisionDetection {
                 const dy = ball.y - subject.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < ball.size + subject.size) subject.exists = false;
+                if (distance < ball.size + subject.size) {
+                    subject.exists = false;
+                    this.callback();
+                }
             }
     });
     }

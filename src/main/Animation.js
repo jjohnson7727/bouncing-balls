@@ -8,7 +8,8 @@ export default class Animation {
       context: null,
       width: 0,
       height: 0,
-      balls: []
+      balls: [],
+      callback: null
     }
     this.handlers = [];
   }
@@ -25,6 +26,11 @@ export default class Animation {
 
   height(height) {
     this._payload.height = height;
+    return this;
+  }
+
+  callback(callback) {
+    this._payload.callback = callback;
     return this;
   }
 
