@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Canvas from './main/Canvas';
 import './App.css';
 
-const TOTAL_BALLS = 5;
+const TOTAL_BALLS = 75;
 const TOTAL_TIME = 60;
 
 class App extends Component {
@@ -30,7 +30,7 @@ class App extends Component {
     );
   }
 
-  handleScoreUpdate() {
+  handleScoreUpdate(ball) {
     this.setState(state => {
       return { balls: state.balls - 1 };
     })

@@ -53,6 +53,7 @@ export default class Animation {
 
   initialize() {
     this._washCanvas();
+    this._washCanvas();
     return this;
   }
 

@@ -104,7 +104,7 @@ export class CollisionDetection {
                 const dy = ball.y - subject.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < ball.size + subject.size) {
+                if (distance < ball.size + subject.size - 3) {
                     subject.exists = false;
                     this.callback();
                 }

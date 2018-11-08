@@ -57,16 +57,18 @@ export class CollisionDetection {
     }
 
     visit(ball) {
-        this.balls.forEach((subject) => {
-            if (ball.exists && !(ball === subject)) {
-                const dx = ball.x - subject.x;
-                const dy = ball.y - subject.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+        if (ball.exists) {
+            this.balls.forEach((subject) => {
+                if (subject.exists && ball !== subject) {
+                    const dx = ball.x - subject.x;
+                    const dy = ball.y - subject.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < ball.size + subject.size) {
-                    subject.color = ball.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
+                    if (distance < ball.size + subject.size) {
+                        subject.color = ball.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
